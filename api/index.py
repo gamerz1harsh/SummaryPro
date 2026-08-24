@@ -35,6 +35,7 @@ def health():
 
 
 @app.post("/")
+@app.post("/api")
 async def summarize_document(
     file: Optional[UploadFile] = File(None),
     text: Optional[str] = Form(None),
