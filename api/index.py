@@ -5,8 +5,8 @@ from fastapi import FastAPI, File, Form, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from extractor import extract_text_from_pdf
-from summarizer import generate_summary, extract_key_points, get_document_stats
+from api.extractor import extract_text_from_pdf
+from api.summarizer import generate_summary, extract_key_points, get_document_stats
 
 app = FastAPI(
     title="Document Summary Assistant",

@@ -162,14 +162,8 @@ async function sendToBackend(file, extractedText) {
     });
 
     if (!response.ok) {
-        let errorDetail = "Request failed";
-        try {
-            const errData = await response.json();
-            errorDetail = errData.detail || errorDetail;
-        } catch (e) {
-            // ignore parse error
-        }
-        throw new Error(errorDetail);
+        const body = await response.text();
+        throw new Error(`HTTP ${response.status}: ${body}`);
     }
 
     return await response.json();
