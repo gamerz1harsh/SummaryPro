@@ -2,20 +2,15 @@
 
 A web application that takes any document (PDF/Image) and generates smart summaries with key points, statistics, and export options.
 
-## Features
+## What This Project Does
 
-- **Document Upload**: Drag-and-drop or file picker for PDF and image files
-- **Text Extraction**:
-  - PDF parsing (server-side with `pypdf`)
-  - OCR for images (client-side with Tesseract.js)
-- **Smart Summary Generation**:
-  - TextRank + TF-IDF algorithm (pure Python, no ML API)
-  - Summary length options: short, medium, long
-  - Key point extraction
-- **Document Statistics**: Word count, sentence count, reading time, readability score
-- **Word Cloud**: Visual representation of top keywords
-- **Export Options**: Text, Markdown, and PDF formats
-- **Mobile-responsive UI**
+Upload a PDF or an image (like a scanned document), and this app will:
+
+1. **Extract the text** — For PDFs, it parses the text server-side. For images, it runs OCR right in your browser.
+2. **Generate a smart summary** — Using a hand-written TextRank + TF-IDF algorithm (no AI API needed, it's all pure Python).
+3. **Show you key points** — The most important sentences from your document.
+4. **Give you stats** — Word count, sentence count, reading time, and a readability score.
+5. **Let you export** — Download the summary as Text, Markdown, or PDF.
 
 ## Tech Stack
 
@@ -32,6 +27,7 @@ A web application that takes any document (PDF/Image) and generates smart summar
 
 ```
 ├── api/                    # Vercel serverless backend
+│   ├── __init__.py        # Marks api as a Python package
 │   ├── index.py           # FastAPI app (entry point)
 │   ├── extractor.py       # PDF text extraction
 │   ├── summarizer.py      # TextRank + TF-IDF summarizer
@@ -69,7 +65,7 @@ python -m http.server 3000
 
 Then open `http://localhost:3000`.
 
-> **Note**: For local development, the frontend calls `/api/summarize`. If your backend runs on a different port, update `API_URL` in `app.js`.
+> **Note**: For local development, the frontend calls `/api`. If your backend runs on a different port, update `API_URL` in `app.js`.
 
 ## Deployment to Vercel
 
@@ -129,7 +125,7 @@ This approach is:
 
 ## API Endpoints
 
-### `POST /api/summarize`
+### `POST /api`
 
 Upload a PDF file or send extracted text.
 
@@ -160,6 +156,23 @@ Upload a PDF file or send extracted text.
 ### `GET /health`
 
 Health check endpoint.
+
+---
+
+## The Journey: What We Faced and How We Solved It
+
+Building and deploying this app wasn't a straight line. We hit several issues — from Vercel routing problems to Python import errors. We documented everything in plain language in our **[ERROR_HISTORY.md](ERROR_HISTORY.md)** file.
+
+Here's a quick summary of what we went through:
+
+1. **First 404** — Frontend files weren't being served because of complex Vercel routing. Fixed by moving files to root and simplifying `vercel.json`.
+2. **Second 404** — API route mismatch between frontend and FastAPI. Fixed by adding both `POST /` and `POST /api` routes.
+3. **Python import errors** — Sibling module imports failed on Vercel. Fixed by adding `__init__.py` and using package imports.
+4. **Hidden error messages** — Frontend was hiding the real error. Fixed by showing the actual HTTP status and body.
+5. **OCR constraint** — Vercel doesn't support system binaries. Fixed by moving OCR to the browser with Tesseract.js.
+6. **Native backend** — Implemented TextRank + TF-IDF from scratch instead of using an AI API.
+
+Read the full story in **[ERROR_HISTORY.md](ERROR_HISTORY.md)**.
 
 ## License
 
