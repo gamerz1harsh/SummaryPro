@@ -3,7 +3,8 @@
 // ============================================================
 
 // API endpoint - uses relative path so it works on Vercel and locally
-const API_URL = "/api/summarize";
+// Vercel mounts api/index.py at /api, and FastAPI handles POST at /
+const API_URL = "/api";
 
 // State
 let selectedFile = null;
