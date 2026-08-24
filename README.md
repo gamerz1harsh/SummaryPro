@@ -36,10 +36,9 @@ A web application that takes any document (PDF/Image) and generates smart summar
 │   ├── extractor.py       # PDF text extraction
 │   ├── summarizer.py      # TextRank + TF-IDF summarizer
 │   └── requirements.txt   # Python dependencies
-├── frontend/               # Static frontend
-│   ├── index.html         # Main page
-│   ├── style.css          # Styles
-│   └── app.js             # Frontend logic + OCR
+├── index.html             # Frontend main page (served at root)
+├── style.css              # Frontend styles
+├── app.js                 # Frontend logic + OCR
 ├── backend/                # Local development backend
 │   ├── main.py            # FastAPI app (local)
 │   ├── extractor.py       # PDF text extraction
@@ -61,17 +60,16 @@ uvicorn main:app --reload --port 8000
 
 ### Frontend
 
-Serve the `frontend/` directory with any static server:
+Serve the project root with any static server:
 
 ```bash
 # Using Python
-cd frontend
 python -m http.server 3000
 ```
 
 Then open `http://localhost:3000`.
 
-> **Note**: For local development, the frontend calls `/api/summarize`. If your backend runs on a different port, update `API_URL` in `frontend/app.js`.
+> **Note**: For local development, the frontend calls `/api/summarize`. If your backend runs on a different port, update `API_URL` in `app.js`.
 
 ## Deployment to Vercel
 

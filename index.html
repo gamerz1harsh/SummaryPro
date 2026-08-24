@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Summary Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">📄</span>
+                <h1>Document Summary <span class="accent">Assistant</span></h1>
+            </div>
+            <p class="tagline">Upload a PDF or image and get a smart, key-point summary in seconds.</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="upload-section" id="uploadSection">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-content">
+                    <div class="upload-icon">📤</div>
+                    <h3>Drag & drop your document here</h3>
+                    <p>or</p>
+                    <button class="btn btn-primary" id="filePickerBtn">Browse Files</button>
+                    <p class="file-hint">Supported: PDF, PNG, JPG, JPEG, BMP, TIFF</p>
+                </div>
+                <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.bmp,.tiff,.tif" hidden>
+            </div>
+
+            <!-- Summary Length Selector -->
+            <div class="length-selector">
+                <label>Summary Length:</label>
+                <div class="length-options">
+                    <button class="length-btn" data-length="short">Short</button>
+                    <button class="length-btn active" data-length="medium">Medium</button>
+                    <button class="length-btn" data-length="long">Long</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <section class="loading-section" id="loadingSection" hidden>
+            <div class="spinner"></div>
+            <h3 id="loadingText">Processing your document...</h3>
+            <p class="loading-sub" id="loadingSub">Extracting text and generating summary</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" hidden>
+            <div class="results-header">
+                <h2>Summary Results</h2>
+                <div class="file-info">
+                    <span class="file-badge" id="fileBadge">📄 document.pdf</span>
+                    <button class="btn btn-secondary" id="newUploadBtn">New Upload</button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <!-- Summary -->
+            <div class="card summary-card">
+                <h3>📝 Summary</h3>
+                <p id="summaryText" class="summary-text"></p>
+            </div>
+
+            <!-- Key Points -->
+            <div class="card key-points-card">
+                <h3>🎯 Key Points</h3>
+                <ul id="keyPointsList" class="key-points-list"></ul>
+            </div>
+
+            <!-- Word Cloud -->
+            <div class="card word-cloud-card">
+                <h3>☁️ Top Keywords</h3>
+                <div id="wordCloud" class="word-cloud"></div>
+            </div>
+
+            <!-- Export Buttons -->
+            <div class="export-section">
+                <h3>Export Summary</h3>
+                <div class="export-buttons">
+                    <button class="btn btn-export" id="exportTxt">📄 Text</button>
+                    <button class="btn btn-export" id="exportMd">📝 Markdown</button>
+                    <button class="btn btn-export" id="exportPdf">📕 PDF</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section class="error-section" id="errorSection" hidden>
+            <div class="error-box">
+                <span class="error-icon">⚠️</span>
+                <h3>Something went wrong</h3>
+                <p id="errorMessage"></p>
+                <button class="btn btn-primary" id="retryBtn">Try Again</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Tesseract.js for client-side OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
